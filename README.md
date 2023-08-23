@@ -1,9 +1,3 @@
-# Build
-
-```sh
-go build -buildvcs=false -trimpath -ldflags "-w -s -extldflags '-static'" -tags "netgo,osusergo" -o nri-flex-ntp-offset
-```
-
 # New Relic Infrastructure Integration Setting
 
 ```yaml
@@ -28,4 +22,11 @@ SELECT latest(`clock.offset.ms`) FROM ntpOffsetSample FACET fullHostname TIMESER
 
 ```sql
 SELECT abs(latest(`clock.offset.ms`)) FROM ntpOffsetSample
+```
+
+# Development
+
+```sh
+[[ -f "$(go env GOPATH)/bin/task" ]] || go install github.com/go-task/task/v3/cmd/task@latest
+$(go env GOPATH)/bin/task lint
 ```
