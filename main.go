@@ -10,6 +10,10 @@ import (
 	"github.com/beevik/ntp"
 )
 
+var (
+	Version string
+)
+
 func init() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 }
@@ -18,10 +22,20 @@ func main() {
 	var hosts string
 	var timeoutSecond int
 	var debug bool
+	var showVersion bool
 	flag.StringVar(&hosts, "hosts", "time.cloudflare.com,time.aws.com", "comma separated ntp hosts")
 	flag.IntVar(&timeoutSecond, "timeout", 5, "timeout seconds")
 	flag.BoolVar(&debug, "debug", false, "debug mode")
+	flag.BoolVar(&showVersion, "version", false, "show version")
 	flag.Parse()
+
+	if showVersion {
+		if Version == "" {
+			Version = "not specified"
+		}
+		fmt.Printf("version: %+v", Version)
+		return
+	}
 
 	if debug {
 		log.Printf("hosts: %+v, timeout: %+v, debug: %+v", hosts, timeoutSecond, debug)
